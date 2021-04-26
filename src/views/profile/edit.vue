@@ -1,0 +1,199 @@
+<template>
+  <v-card>
+    <h1 class="headline text-center font-weight-bold py-4 mainColor--text">
+      Edit Your Profile
+    </h1>
+    <CustomForm
+      :fields="fields"
+      :formBtn="formBtn"
+      @getResult="update"
+      @click="click"
+      :request="request"
+      :loader="true"
+      :popup="true"
+    />
+  </v-card>
+</template>
+
+<script>
+/* eslint-disable */
+import CustomForm from "@/components/CustomForm.vue";
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  components: {
+    CustomForm
+  },
+  data() {
+    return {
+      user: {}
+    };
+  },
+  computed: {
+    ...mapGetters(["countriesData", "skillsData"]),
+    formBtn() {
+      return {
+        text: "Edit",
+        bindOptions: {
+          type: "submit",
+          color: "mainColor",
+          ["v-on:click"]: "change"
+        }
+      };
+    },
+    fields() {
+      return [
+        {
+          component: "avatar",
+          key: "avatar",
+          value: null,
+          input: "input",
+          width: { xs: 12, sm: 12, lg: 12 }
+
+          // label: "Profile Picture",
+          // key: "avatar",
+          // change: "changefile",
+          // value: null,
+          // slot: "Avatar",
+          // AvatarSrc: this.user.avatar,
+          // bindOptions: {
+          //   placeholder: "Upload You Profile Picture",
+          //   type: "file",
+          //   prependIcon: "mdi-camera",
+          //   chips: true,
+          //   ref: "avatar",
+          //   ["hide-input"]: true
+        },
+
+        {
+          component: "v-text-field",
+          label: "First Name",
+          key: "name",
+          value: this.user.name,
+          rules: "required|min:6|max:20",
+          bindOptions: {
+            required: true,
+            placeholder: "Write Your First Name",
+            counter: 30
+          },
+          width: { xs: 12, sm: 6, lg: 4 }
+        },
+        {
+          component: "v-text-field",
+          label: "Your Email",
+          key: "email",
+          value: this.user.email,
+          rules: "required|email",
+          bindOptions: {
+            rules: [],
+            placeholder: "Write Your Email"
+          },
+          width: { xs: 12, sm: 6, lg: 4 }
+        },
+        {
+          component: "v-text-field",
+          label: "Your Phone",
+          key: "phone",
+          value: this.user.phone,
+          rules: "required",
+          bindOptions: {
+            type: "tel",
+            placeholder: "Write Your Phone Number"
+          },
+          width: { xs: 12, sm: 6, lg: 4 }
+        },
+        {
+          component: "v-text-field",
+          label: "Your Job",
+          key: "job",
+          value: this.user.job,
+          rules: "required",
+          bindOptions: {
+            placeholder: "Write Your Job"
+          },
+          width: { xs: 12, sm: 6, lg: 4 }
+        },
+        {
+          component: "v-select",
+          label: "Your Gender",
+          key: "gender",
+          value: this.user.gender,
+          rules: "required",
+          bindOptions: {
+            items: ["male", "female"],
+            menuProps: { offsetY: true }
+          },
+          width: { xs: 12, sm: 6, lg: 4 }
+        },
+        {
+          component: "v-select",
+          label: "Your Country",
+          key: "country",
+          value: this.user.country,
+          rules: "required",
+          bindOptions: {
+            items: this.countriesData,
+            menuProps: { offsetY: true }
+          },
+          width: { xs: 12, sm: 6, lg: 4 }
+        },
+        {
+          component: "v-textarea",
+          label: "Public Info About Yourself",
+          key: "info",
+          value: this.user.info,
+          rules: "required|min:200|max:1000",
+          bindOptions: {
+            required: true,
+            placeholder: "Write Brief About Yourself",
+            counter: 1000,
+            rows: "5"
+          },
+          width: { xs: 12, sm: 12, lg: 12 }
+        },
+        {
+          component: "v-select",
+          label: "Your Skills",
+          key: "skills",
+          value: this.user.skills,
+          rules: "required",
+          bindOptions: {
+            items: this.skillsData,
+            menuProps: { offsetY: true },
+            deletableChips: true,
+            multiple: true,
+            chips: true
+            // loading: true
+          },
+          width: { xs: 12, sm: 12, lg: 12 }
+        }
+      ];
+    },
+    request() {
+      return {
+        method: "post",
+        url: `http://localhost:8000/api/profile/${this.user.id}`
+        // data: this.user
+      };
+    }
+  },
+  methods: {
+    ...mapActions(["updateUserData"]),
+    update(res) {
+      // this.$store.commit("getUserData");
+      this.updateUserData(res.data.user);
+      // console.log(res.data);
+    },
+    change(e, fieldKey, x) {
+      // console.log(e + x);
+    },
+    click(fieldKey) {
+      // console.log(fieldKey + "clicked");
+    }
+  },
+  created() {
+    this.$store.commit("getSkillsAndCountriesData");
+    this.user = this.$store.state.user;
+  }
+};
+</script>
