@@ -41,4 +41,32 @@ a {
 .theme--light .v-select .mdi-close-circle::before {
   color: white;
 }
+
+/* navbar in moblie */
+.dorpdown-menu-navbar {
+  margin: 10px -14px;
+}
+
+.dorpdown-menu-link {
+  width: 100% !important;
+}
+
+.dorpdown-menu-link .v-list-item__content {
+  margin-left: 55px;
+}
+
+.dorpdown-menu-link .v-list-item__icon {
+  position: absolute;
+  left: -25px;
+  top: 12px;
+  font-size: 35px;
+}
+
+.dorpdown-menu-link .subDorpdown-menu-link .v-list-item__content {
+  margin-left: 30px;
+}
+
+.dorpdown-menu-link .subDorpdown-menu-link.v-list-item--active {
+  color: #fff !important;
+}
 /*# sourceMappingURL=main.css.map */

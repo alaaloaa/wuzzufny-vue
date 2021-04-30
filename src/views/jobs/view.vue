@@ -1,14 +1,24 @@
 <template>
   <div>
-    <v-container>
+    <v-container v-if="!loader.loading">
       <v-layout row wrap>
-        <v-col md="9" sm="9" xs="12" class="md-9 sm-9 xs-12" order="5">
+        <v-col
+          md="9"
+          sm="9"
+          xs="12"
+          :class="[
+            'md-9 sm-9 xs-12',
+            $vuetify.breakpoint.xs ? 'text-center' : ''
+          ]"
+          order="5"
+        >
           <v-card class="pa-3">
             <div class="head">
               <div class="jobName">
                 <v-btn
+                  v-if="loggedIn"
                   small
-                  class="float-right ml-4"
+                  class="float-right ml-4 mb-2"
                   outlined
                   :loading="bookmarkLoading"
                   @click="bookmark"
@@ -16,24 +26,19 @@
                   ref="bookmark"
                 >
                   <span v-if="bookmarked">
-                    <span class="mr-1">Bookmarked</span>
+                    <span
+                      :class="['mr-1', $vuetify.breakpoint.xs ? 'd-none' : '']"
+                      >Bookmarked</span
+                    >
                     <v-icon>mdi-bookmark-off-outline</v-icon>
                   </span>
                   <span v-else>
-                    <span class="mr-1">Bookmark</span>
+                    <span
+                      :class="['mr-1', $vuetify.breakpoint.xs ? 'd-none' : '']"
+                      >Bookmark</span
+                    >
                     <v-icon>mdi-bookmark-outline</v-icon>
                   </span>
-                </v-btn>
-                <v-btn
-                  small
-                  class="float-right  white--text"
-                  color="mainColor"
-                  outlined
-                  :disabled="applied"
-                  @click="apply"
-                >
-                  <span v-if="!applied">Apply Now</span>
-                  <span v-else>You've Applied Wait For Employer Response</span>
                 </v-btn>
 
                 <h1 class="headline  mainColor--text">{{ job.name }}</h1>
@@ -86,6 +91,26 @@
               </v-chip>
             </div>
           </v-card>
+          <center>
+            <v-btn
+              v-if="loggedIn"
+              small
+              class="white--text my-8 no-text-transform"
+              color="mainColor"
+              outlined
+              x-large
+              :disabled="applied"
+              @click="apply"
+              block
+            >
+              <span v-if="!applied">Apply Now</span>
+              <span v-else
+                >You've Applied Wait
+                <br :class="$vuetify.breakpoint.xs ? 'd-block' : 'd-none'" />For
+                Employer Response</span
+              >
+            </v-btn>
+          </center>
           <v-card class="mt-4 pa-4">
             <div class="smilarJobs">
               <h1 class="headline mb-2 mainColor--text">Smilar Jobs</h1>
@@ -93,7 +118,9 @@
                 color="mainColor"
                 outlined
                 class="ma-1"
-                v-for="(similarJob, index) in similarJobs.slice(0, 20)"
+                v-for="(similarJob, index) in similarJobs
+                  ? similarJobs.slice(0, 20)
+                  : ''"
                 :key="index"
               >
                 <router-link :to="`/job/view/${similarJob.id}`">
@@ -107,9 +134,14 @@
           </v-card>
         </v-col>
         <v-col md="3" sm="3" xs="12" order="1">
-          <v-card class="pa-3 pb-7 postedBy">
+          <v-card class="pa-3 pb-7 ">
             <div class="name">
               <p class="text-center">Job Posted By</p>
+              <center>
+                <v-avatar class="mb-2" size="70">
+                  <img :src="job.user.avatar" alt="John" />
+                </v-avatar>
+              </center>
               <p class="font-weight-bold mainColor--text text-center">
                 <router-link
                   class="mainColor--text"
@@ -119,28 +151,19 @@
                 >
               </p>
             </div>
-            <div class="userInfo mt-3">
-              <v-img class="mt-2" src="@/assets/images/profile-pic.jpg"></v-img>
+            <div class="text-center mt-3">
               <div class="job">
-                <span class="caption"
-                  >{{ job.user.info.slice(0, 90) }} ... etc
+                <span class="caption" v-if="job.user.info">
+                  {{ job.user.info.slice(0, 90) }} ... etc
                 </span>
               </div>
-              <!-- <div class="buttons mt-10">
-                <v-btn small color="mainColor" outlined>Follow</v-btn>
-                <v-btn small class="float-right" outlined>Bookmark</v-btn>
-              </div> -->
             </div>
           </v-card>
           <v-card class="mt-10 pa-4 companyInfo">
             <h3 class="headline ml-4  mainColor--text text-center">
               About Company
             </h3>
-            <v-img
-              class="ma-4"
-              aspect-ratio="1.7"
-              src="@/assets/images/cover.jpg"
-            ></v-img>
+            <v-img class="ma-4" aspect-ratio="1.7" :src="`${job.logo}`"></v-img>
             <h4 class=" text-center">{{ job.companyName }}</h4>
             <p class="caption ml-4">
               {{ job.aboutCompany }}
@@ -153,7 +176,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -167,11 +190,10 @@ export default {
     };
   },
   computed: {
+    ...mapState(["loader"]),
+    ...mapGetters(["loggedIn"]),
     id() {
       return this.$route.params.id;
-    },
-    loggedInuserId() {
-      return this.$store.user.id;
     },
     jobInfo() {
       return [
@@ -190,10 +212,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      laodingStatus: "loader/laodingStatus"
+      loadingStatus: "loader/loadingStatus"
     }),
     getData() {
-      this.laodingStatus(true);
+      this.loadingStatus(true);
       this.axios
         .get(`http://localhost:8000/api/job/view/${this.id}`)
         .then(res => {
@@ -201,7 +223,7 @@ export default {
           this.similarJobs = res.data.similarJobs;
           this.bookmarked = this.job.bookmarks.length != 0 ? true : false;
           this.applied = this.job.applies.length != 0 ? true : false;
-          this.laodingStatus(false);
+          this.loadingStatus(false);
         });
     },
     bookmark() {
@@ -237,6 +259,10 @@ export default {
   height: 70px;
   width: 70px;
   display: inline-block;
+}
+
+.name img {
+  object-fit: cover;
 }
 
 .userInfo .job {

@@ -3,17 +3,24 @@
     <!-- <Loader v-if="loading" :loader="true" /> -->
     <template>
       <v-row justify="center">
-        <v-dialog v-model="confirmBox" persistent max-width="290">
+        <v-dialog v-model="dialogDelete" max-width="500px" persistent>
           <v-card>
-            <p class="text-center pa-4">Are You Sure To Delete This Job</p>
+            <v-card-title class="headline"
+              >Are you sure you want to delete this item?</v-card-title
+            >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="confirmBox = false">
-                No
-              </v-btn>
-              <v-btn color="error darken-1" text @click="process = true">
-                Yes
-              </v-btn>
+              <v-btn text @click="closeDelete" :disabled="btnLoading"
+                >Cancel</v-btn
+              >
+              <v-btn
+                color="error darken-1"
+                text
+                @click="deleteItemConfirm"
+                :loading="btnLoading"
+                >OK</v-btn
+              >
+              <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -41,17 +48,16 @@
             :search="search"
           >
             <template #item.name="{item}"
-              ><router-link :to="`/job/view/${item.id}`">{{
-                item.id + " " + item.name
-              }}</router-link>
+              ><v-btn router text :to="`/job/view/${item.id}`">
+                <span>{{ item.name }}</span>
+              </v-btn>
             </template>
             <template slot="item.actions" scope="props">
               <v-btn
                 router
                 :to="`/job/${props.item.id}/edit`"
                 class="ma-2"
-                fab
-                dark
+                text
                 small
                 color="cyan"
               >
@@ -60,14 +66,13 @@
                 </v-icon>
               </v-btn>
               <v-btn
-                @click="deleteJob(props.index, props.item.id)"
-                color="error"
+                @click="deleteItem(props.index, props.item.id)"
+                color="#fff"
                 class="ma-2"
-                fab
-                dark
                 small
+                text
               >
-                <v-icon color="">mdi-delete</v-icon>
+                <v-icon color="error">mdi-delete</v-icon>
               </v-btn>
             </template>
           </v-data-table>
@@ -85,9 +90,14 @@ export default {
     return {
       items: [],
       loading: false,
+      btnLoading: false,
       confirmBox: false,
       process: false,
-      search: ""
+      search: "",
+      dialog: false,
+      dialogDelete: false,
+      index: -1,
+      itemId: 1
     };
   },
   computed: {
@@ -115,26 +125,41 @@ export default {
   },
   methods: {
     ...mapActions({
-      laodingStatus: "loader/laodingStatus",
+      loadingStatus: "loader/loadingStatus",
       popupData: "popup/popupData"
     }),
     getData() {
-      this.laodingStatus(true);
+      this.loadingStatus(true);
       this.axios.get(`http://localhost:8000/api/user/jobs`).then(res => {
         this.items = res.data;
-        this.laodingStatus(false);
+        this.loadingStatus(false);
       });
     },
-    deleteJob(index, jobId) {
-      this.laodingStatus(true);
-      this.axios.delete(`http://localhost:8000/api/job/${jobId}`).then(res => {
-        this.items.splice(index, 1);
-        this.laodingStatus(false);
-        this.popupData({
-          show: true,
-          text: res.data.msg
+    deleteItem(index, itemId) {
+      this.popupData({ show: false });
+      this.index = index;
+      this.itemId = itemId;
+      this.dialogDelete = true;
+    },
+
+    deleteItemConfirm() {
+      this.btnLoading = true;
+      this.axios
+        .delete(`http://localhost:8000/api/job/${this.itemId}`)
+        .then(res => {
+          this.items.splice(this.index, 1);
+          this.closeDelete();
+          this.btnLoading = false;
+          this.popupData({
+            show: true,
+            text: res.data.msg
+          });
         });
-      });
+    },
+    closeDelete() {
+      this.dialogDelete = false;
+      this.index = "";
+      this.itemId = "";
     }
   },
   created() {

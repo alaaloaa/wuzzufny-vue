@@ -8,7 +8,7 @@
       :formBtn="formBtn"
       :request="request"
       :loader="true"
-      @getResult="create"
+      @success="create"
     />
   </v-card>
 </template>
@@ -206,21 +206,19 @@ export default {
           },
           width: { xs: 12, sm: 12, lg: 12 }
         },
-        // {
-        //   component: "v-file-input",
-        //   label: "Company Logo",
-        //   key: "companyLogo",
-        //   value: null,
-        //  rules: '',
-        //   bindOptions: {
-        //     placeholder: "Insert Company Logo",
-        //     counter: 40,
-        //     type: "file",
-        //     prependIcon: "mdi-camera",
-        //     chips: true
-        //   },
-        //   width: { xs: 12, sm: 12, lg: 12 }
-        // },
+        {
+          component: "v-file-input",
+          label: "Company Logo",
+          key: "logo",
+          value: null,
+          rules: "required",
+          bindOptions: {
+            placeholder: "Insert Company Logo",
+            prependIcon: "mdi-camera",
+            chips: true
+          },
+          width: { xs: 12, sm: 12, lg: 12 }
+        },
         {
           component: "v-switch",
           label: "Availability",
@@ -243,8 +241,9 @@ export default {
     }
   },
   methods: {
-    create() {
-      console.log("hi");
+    create(res) {
+      console.log(res.data.job.id);
+      this.$router.push({ name: "job/view", params: { id: res.data.job.id } });
     }
   },
   created() {

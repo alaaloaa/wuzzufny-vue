@@ -6,7 +6,7 @@ export const state = {
 };
 
 export const mutations = {
-  changeLaodingStatus(state, status) {
+  changeLoadingStatus(state, status) {
     state.loading = status;
   },
   changeType(state, type) {
@@ -15,8 +15,8 @@ export const mutations = {
 };
 
 export const actions = {
-  laodingStatus({ commit, dispatch }, status) {
-    commit("changeLaodingStatus", status);
+  loadingStatus({ commit, dispatch }, status) {
+    commit("changeLoadingStatus", status);
     // close popup if it opens
     dispatch(
       "popup/popupData",

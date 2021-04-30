@@ -8,60 +8,25 @@
       <router-link to="/" class="text-decoration-none mainColor--text">
         <v-toolbar-title left>Wuzzufny</v-toolbar-title>
       </router-link>
-      <span class="ml-4">{{ user.name }}</span>
       <v-spacer></v-spacer>
-      <v-btn
-        class="d-none d-sm-flex font-weight-light py-6 rounded-0"
-        text
-        v-for="link in publicLinks"
-        :key="link.name"
-        router
-        :to="link.route"
-      >
-        <span v-if="!link.dropdown">
-          <v-icon left>{{ link.icon }}</v-icon>
-          <span>{{ link.name }}</span>
-        </span>
-        <v-menu v-else open-on-hover offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              v-on="on"
-              :color="$vuetify.theme.dark ? 'balck' : 'white'"
-              depressed
-              class="rounded-0 ma-n4 py-6"
-            >
-              <v-icon left>{{ link.icon }}</v-icon>
-              <span>{{ link.name }}</span>
+
+      <template>
+        <v-btn
+          class="d-none d-sm-flex font-weight-light py-6 rounded-0 navbar-links-sm"
+          text
+          v-for="(link, index) in loggedIn ? userLinks : guestLinks"
+          :key="index"
+          router
+          :to="link.route"
+        >
+          <span v-if="!link.dropdown">
+            <v-icon left v-if="link.icon">{{ link.icon }}</v-icon>
+            <v-btn fab icon v-if="link.img" class="link-img">
+              <v-avatar size="30">
+                <img :src="link.img" left />
+              </v-avatar>
             </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="item in link.dropdown.items"
-              :key="item.name"
-              router
-              :to="item.route"
-            >
-              <v-list-item-title>
-                <v-icon left>{{ item.icon }}</v-icon>
-                <span>{{ item.name }}</span></v-list-item-title
-              >
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-btn>
-      <template v-if="loggedIn">
-        <v-btn
-          class="d-none d-sm-flex font-weight-light py-6 rounded-0"
-          text
-          v-for="(link, index) in userLinks"
-          :key="index"
-          router
-          :to="link.route"
-        >
-          <span v-if="!link.dropdown">
-            <v-icon left>{{ link.icon }}</v-icon>
-            <span>{{ link.name }}</span>
+            <span class="textLink">{{ link.name }}</span>
           </span>
           <v-menu v-else open-on-hover offset-y>
             <template v-slot:activator="{ on, attrs }">
@@ -72,7 +37,7 @@
                 depressed
                 class="rounded-0 ma-n4 py-6"
               >
-                <v-icon left>{{ link.icon }}</v-icon>
+                <v-icon left v-if="link.icon">{{ link.icon }}</v-icon>
                 <span>{{ link.name }}</span>
               </v-btn>
             </template>
@@ -84,56 +49,15 @@
                 :to="item.route"
               >
                 <v-list-item-title>
-                  <v-icon left>{{ item.icon }}</v-icon>
-                  <span>{{ item.name }}</span></v-list-item-title
-                >
+                  <v-icon left v-if="item.icon">{{ item.icon }}</v-icon>
+                  <span>{{ item.name }}</span>
+                </v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
         </v-btn>
       </template>
-      <template v-else>
-        <v-btn
-          class="d-none d-sm-flex font-weight-light py-6 rounded-0"
-          text
-          v-for="(link, index) in guestLinks"
-          :key="index"
-          router
-          :to="link.route"
-        >
-          <span v-if="!link.dropdown">
-            <v-icon left>{{ link.icon }}</v-icon>
-            <span>{{ link.name }}</span>
-          </span>
-          <v-menu v-else open-on-hover offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                v-bind="attrs"
-                v-on="on"
-                :color="$vuetify.theme.dark ? 'balck' : 'white'"
-                depressed
-                class="rounded-0 ma-n4 py-6"
-              >
-                <v-icon left>{{ link.icon }}</v-icon>
-                <span>{{ link.name }}</span>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(item, index) in link.dropdown.items"
-                :key="index"
-                router
-                :to="item.route"
-              >
-                <v-list-item-title>
-                  <v-icon left>{{ item.icon }}</v-icon>
-                  <span>{{ item.name }}</span></v-list-item-title
-                >
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-btn>
-      </template>
+
       <div class="text-center"></div>
     </v-toolbar>
 
@@ -141,16 +65,43 @@
       <v-list>
         <v-list-item-group>
           <v-list-item
-            v-for="(link, index) in links"
+            v-for="(link, index) in loggedIn ? userLinks : guestLinks"
             :key="index"
-            router
-            :to="link.route"
             no-action
+            :to="link.route"
+            router
+            :class="[link.dropdown ? 'dorpdown-menu-navbar' : '']"
           >
-            <v-list-item-icon>
-              <v-icon>{{ link.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{ link.name }}</v-list-item-title>
+            <template v-if="!link.dropdown">
+              <v-list-item-icon>
+                <v-icon left v-if="link.icon">{{ link.icon }}</v-icon>
+                <img width="20" :src="link.img" v-if="link.img" />
+              </v-list-item-icon>
+              <v-list-item-title>{{ link.name }}</v-list-item-title>
+            </template>
+
+            <v-list-group v-else class="dorpdown-menu-link">
+              <template v-slot:activator>
+                <v-list-item-content>
+                  <v-list-item-title>{{ link.dropdownName }}</v-list-item-title>
+                </v-list-item-content>
+              </template>
+
+              <v-list-item
+                v-for="(dropdownLink, index) in link.dropdown.items"
+                :key="index"
+                :to="dropdownLink.route"
+                router
+                class="subDorpdown-menu-link"
+              >
+                <v-icon left v-if="dropdownLink.icon">{{
+                  dropdownLink.icon
+                }}</v-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ dropdownLink.name }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-group>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -173,22 +124,28 @@ export default {
       return this.$store.getters.loggedIn;
     },
     userLinks() {
-      return this.links.filter(link => link.status === "user");
+      return this.links.filter(link => link.status !== "guest");
     },
     guestLinks() {
-      return this.links.filter(link => link.status === "guest");
+      return this.links.filter(link => link.status !== "user");
     },
-    publicLinks() {
-      return this.links.filter(link => link.status === "public");
+    userName() {
+      if (this.loggedIn) {
+        if (this.user.name.length > 12) {
+          return this.user.name.slice(0, 12) + "...";
+        } else {
+          return this.user.name;
+        }
+      }
+      return "";
     },
     links() {
       return [
-        { name: "Home", icon: "mdi-home", route: "/", status: "public" },
+        { name: "Home", icon: "mdi-home", route: "/" },
         {
           name: "Jobs",
           icon: "mdi-folder-open",
-          route: "/jobs",
-          status: "public"
+          route: "/jobs"
         },
         {
           name: "Create Job",
@@ -197,9 +154,15 @@ export default {
           status: "user"
         },
         {
-          name: "Profile",
-          icon: "mdi-arrow-down-drop-circle-outline",
+          name: this.userName,
+          img: this.user.avatar,
           route: "/profile/view",
+          status: "user"
+        },
+        {
+          dropdownName: "More",
+          icon: "mdi-arrow-down-drop-circle-outline",
+          route: "",
           status: "user",
           dropdown: {
             items: [
@@ -207,7 +170,8 @@ export default {
                 name: "User Jobs",
                 icon: "mdi-home",
                 route: "/profile/jobs",
-                status: "user"
+                status: "user",
+                active: true
               },
               {
                 name: "Edit Profile",
@@ -238,6 +202,18 @@ export default {
         }
       ];
     }
+  },
+  created() {
+    console.log(this.$refs.dorpdownMenuLink);
   }
 };
 </script>
+<style>
+.navbar-links-sm .textLink {
+  position: relative;
+  top: 3px;
+}
+.link-img img {
+  object-fit: cover;
+}
+</style>

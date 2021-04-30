@@ -2,16 +2,17 @@
   <div>
     <center>
       <div class="profile-pic mb-4">
-        <img
+        <!-- <img
           class="profile-pic round"
           :src="localValue ? localValue : defaultImg()"
-        />
+        /> -->
       </div>
 
       <input type="file" ref="file" hidden @change="fileValue" />
-      <v-btn small elevation="2" color="primary" @click="clickInput"
-        >Change</v-btn
-      >
+      <v-btn small elevation="2" color="primary" @click="clickInput">
+        Change
+      </v-btn>
+      {{ data }}
     </center>
   </div>
 </template>
@@ -19,9 +20,9 @@
 <script>
 export default {
   props: {
-    value: {
-      type: String
-    }
+    // value: {
+    //   type: String
+    // }
   },
   data() {
     return {
@@ -29,20 +30,21 @@ export default {
     };
   },
   computed: {
-    localValue: {
-      get() {
-        return this.value;
-      },
-      set(val) {
-        return val;
-      }
-    }
+    // localValue: {
+    //   get() {
+    //     // return this.value;
+    //   },
+    //   set(val) {
+    //     return val;
+    //   }
+    // }
   },
   methods: {
     clickInput() {
       this.$refs.file.click();
     },
     fileValue(file) {
+      this.data = file.target.files[0];
       this.$emit("file", file.target.files[0]);
       // if (file) {
       //   this.value = URL.createObjectURL(file.target.files[0]);

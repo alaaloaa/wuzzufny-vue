@@ -6,7 +6,7 @@
     <CustomForm
       :fields="fields"
       :formBtn="formBtn"
-      @getResult="update"
+      @success="update"
       @click="click"
       :request="request"
       :loader="true"
@@ -43,28 +43,6 @@ export default {
     },
     fields() {
       return [
-        {
-          component: "avatar",
-          key: "avatar",
-          value: null,
-          input: "input",
-          width: { xs: 12, sm: 12, lg: 12 }
-
-          // label: "Profile Picture",
-          // key: "avatar",
-          // change: "changefile",
-          // value: null,
-          // slot: "Avatar",
-          // AvatarSrc: this.user.avatar,
-          // bindOptions: {
-          //   placeholder: "Upload You Profile Picture",
-          //   type: "file",
-          //   prependIcon: "mdi-camera",
-          //   chips: true,
-          //   ref: "avatar",
-          //   ["hide-input"]: true
-        },
-
         {
           component: "v-text-field",
           label: "First Name",
@@ -163,7 +141,15 @@ export default {
             deletableChips: true,
             multiple: true,
             chips: true
-            // loading: true
+          },
+          width: { xs: 12, sm: 12, lg: 12 }
+        },
+        {
+          component: "v-file-input",
+          key: "avatar",
+          value: null,
+          bindOptions: {
+            placeholder: "Update You Profile Picture"
           },
           width: { xs: 12, sm: 12, lg: 12 }
         }
@@ -180,8 +166,10 @@ export default {
   methods: {
     ...mapActions(["updateUserData"]),
     update(res) {
-      // this.$store.commit("getUserData");
-      this.updateUserData(res.data.user);
+      if (res.status == 200) {
+        this.updateUserData(res.data.user);
+      }
+
       // console.log(res.data);
     },
     change(e, fieldKey, x) {

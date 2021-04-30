@@ -49,7 +49,7 @@ export default {
   methods: {
     ...mapMutations(["startPageStatus"]),
     ...mapActions({
-      laodingStatus: "loader/laodingStatus",
+      loadingStatus: "loader/loadingStatus",
       changeType: "loader/changeType"
     })
   },
@@ -62,7 +62,11 @@ export default {
         if (error.response.status === 401) {
           this.startPageStatus(true);
           this.$store.commit("logout");
-          this.laodingStatus(false);
+          this.loadingStatus(false);
+        }
+        if (error.response.status === 404) {
+          this.$router.push({ name: "notFound" });
+          this.loadingStatus(false);
         }
         return Promise.reject(error);
       }
@@ -75,7 +79,7 @@ export default {
       this.$store.commit("getUserData");
     } else {
       this.startPageStatus(true);
-      this.laodingStatus(false);
+      this.loadingStatus(false);
       this.changeType("circle");
     }
   }

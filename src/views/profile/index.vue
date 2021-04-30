@@ -164,6 +164,7 @@ export default {
   height: 150px;
   border: 0.5px solid #eee;
   border-radius: 50%;
+  object-fit: cover;
 }
 @media screen and (max-width: 500px) {
   .contact {

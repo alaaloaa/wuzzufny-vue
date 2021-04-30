@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- <Loader v-if="loader" :loader="loading" />
-    <Popup v-if="popup" :popup="popupData" /> -->
     <v-form @submit.prevent="send">
       <v-container>
         <v-layout row wrap pb-4>
@@ -20,12 +18,10 @@
               @input="funcioncall(field.input, field.key, field.value)"
               @change="$emit('change', $event, field.key)"
               @click="funcioncall(field.click, field.key)"
-              @file="fileData($event, field.key)"
               v-model="field.value"
               v-bind="[field.bindOptions, formBindOptions]"
               :color="errors.has(field.key) ? 'error' : 'mainColor'"
               v-validate="field.rules"
-              :true-value="1"
             />
             <component
               v-if="field.slot"
@@ -65,7 +61,6 @@ import {
   VFileInput
 } from "vuetify/es5/components";
 import Password from "./password";
-// import Popup from "./popup";
 import Avatar from "./Avatar";
 import { mapActions } from "vuex";
 
@@ -110,39 +105,18 @@ export default {
     }
   },
   data: () => ({
-    formData: [],
-    loading: false,
-    // popupData: {
-    //   show: false
-    // },
-    fileUrl: ""
+    loading: false
   }),
   computed: {},
   methods: {
     ...mapActions({
-      laodingStatus: "loader/laodingStatus",
+      loadingStatus: "loader/loadingStatus",
       popupData: "popup/popupData"
     }),
-    fileData($e, fieldKey) {
-      this.fields[fieldKey] = $e;
-      console.log(this.fields[fieldKey]);
-    },
+
     input(fieldName, fieldValue) {
       this.$emit("input", fieldName, fieldValue);
-      // console.log(this.fields["avatar"]);
     },
-    // changefile(file) {
-    //   if (file) {
-    //     this.laodingStatus(true);
-
-    //     this.fileUrl = URL.createObjectURL(file);
-    //     this.$nextTick(() => this.laodingStatus(false));
-    //   } else {
-    //     this.fileUrl = null;
-    //   }
-
-    //   this.fields["avatar"] = file;
-    // },
 
     funcioncall(eventType, fieldName, fieldValue) {
       if (eventType) {
@@ -156,33 +130,37 @@ export default {
       this.$validator.validateAll().then(res => {
         if (res) {
           if (this.request.url) {
-            this.laodingStatus(true);
+            this.loadingStatus(true);
             var result = this.fields.map(function(field) {
               return { [field.key]: field.value };
             });
             var data = Object.assign({}, ...result);
             var formData = new FormData();
             Object.keys(data).forEach(key => {
-              formData.append(key, data[key]);
+              console.log(this.fields["avatar"]);
+              if (data[key] && Array.isArray(data[key])) {
+                data[key].forEach(value => formData.append(`${key}[]`, value));
+              } else {
+                formData.append(key, data[key]);
+              }
             });
-            console.log(this.fields["avatar"]);
             this.axios({
               method: this.request.method,
               url: this.request.url,
               data: formData
             })
               .then(res => {
-                this.laodingStatus(false);
+                this.loadingStatus(false);
                 if (this.popup) {
                   this.popupData({
                     show: true,
                     text: res.data.msg
                   });
                 }
-                this.$emit("getResult", res);
+                this.$emit("success", res);
               })
               .catch(err => {
-                this.laodingStatus(false);
+                this.loadingStatus(false);
                 if (this.errorsMix) {
                   this.$setLaravelValidationErrorsFromResponse(
                     err.response.data
@@ -194,7 +172,7 @@ export default {
                     text: Object.values(err.response.data.errors)[0].toString()
                   });
                 }
-                this.$emit("getResult", err.response);
+                this.$emit("error", err.response);
               });
           } else {
             this.$emit("function");

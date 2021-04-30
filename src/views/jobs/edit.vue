@@ -1,21 +1,25 @@
 <template>
-  <v-card>
+  <v-card v-if="!PageLoading">
     <h1 class="headline text-center font-weight-bold py-4 mainColor--text">
       Edit
     </h1>
+    <v-btn router :to="`/job/view/${jobId}`" text class="viewBtn">
+      <v-icon elevation="2" color="mainColor">mdi-eye</v-icon>
+    </v-btn>
+
     <CustomForm
       :fields="fields"
       :formBtn="formBtn"
       :request="request"
       :loader="true"
-      @getResult="update"
+      @success="update"
     />
   </v-card>
 </template>
 
 <script>
 import CustomForm from "@/components/CustomForm.vue";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   components: {
@@ -23,9 +27,10 @@ export default {
   },
   data: () => ({
     job: {},
-    loading: false
+    PageLoading: true
   }),
   computed: {
+    ...mapState(["loader"]),
     ...mapGetters(["countriesData", "skillsData"]),
     jobId() {
       return this.$route.params.id;
@@ -110,8 +115,7 @@ export default {
           component: "v-text-field",
           label: "From ? Years OF Experience",
           key: "experience->from",
-          // value: this.job.experience.from,
-          value: 3,
+          value: this.job.experience.from,
           rules: "required|integer|min:1|max:2",
           bindOptions: {
             placeholder: "From ? Years OF Experience",
@@ -124,8 +128,7 @@ export default {
           component: "v-text-field",
           label: "To ? Years OF Experience",
           key: "experience->to",
-          // value: this.job.experience.to,
-          value: 9,
+          value: this.job.experience.to,
           rules: "required|integer|min:1|max:2",
           bindOptions: {
             placeholder: "To ? Years OF Experience",
@@ -180,7 +183,7 @@ export default {
           label: "Company Name",
           key: "companyName",
           value: this.job.companyName,
-          rules: "required|min:10|max:40",
+          rules: "required|min:2|max:40",
           bindOptions: {
             placeholder: "Write Company Name",
             counter: 40
@@ -214,22 +217,19 @@ export default {
           },
           width: { xs: 12, sm: 12, lg: 12 }
         },
-        // {
-        //   component: "v-file-input",
-        //   label: "Company Logo",
-        //   key: "companyLogo",
-        //   value: this.job.companyLogo,
-
-        //   rules: "",
-        //   bindOptions: {
-        //     placeholder: "Insert Company Logo",
-        //     counter: 40,
-        //     type: "file",
-        //     prependIcon: "mdi-camera",
-        //     chips: true
-        //   },
-        //   width: { xs: 12, sm: 12, lg: 12 }
-        // },
+        {
+          component: "v-file-input",
+          label: "Company Logo",
+          key: "logo",
+          value: null,
+          rules: "",
+          bindOptions: {
+            placeholder: "update Company Logo",
+            prependIcon: "mdi-camera",
+            chips: true
+          },
+          width: { xs: 12, sm: 12, lg: 12 }
+        },
         {
           component: "v-switch",
           label: "Availability",
@@ -254,17 +254,15 @@ export default {
   methods: {
     ...mapMutations(["getSkillsAndCountriesData"]),
     ...mapActions({
-      laodingStatus: "loader/laodingStatus"
+      loadingStatus: "loader/loadingStatus"
     }),
     getData() {
-      this.laodingStatus(true);
       this.axios
         .get(`http://localhost:8000/api/job/${this.jobId}/edit`)
         .then(res => {
           this.job = res.data;
-          this.laodingStatus(false);
-
-          console.log(res.data);
+          this.loadingStatus(false);
+          this.PageLoading = false;
         });
     },
     update() {
@@ -272,10 +270,18 @@ export default {
     }
   },
   created() {
-    // console.log(JSON.parse(this.job.experience));
-    // console.log(this.job.experience.to);
+    this.loadingStatus(true);
+
     this.getData();
     this.getSkillsAndCountriesData();
   }
 };
 </script>
+<style>
+.viewBtn {
+  position: absolute;
+  right: 30px;
+  top: 21px;
+  transform: scale3d(1.5, 1.5, 1.5);
+}
+</style>

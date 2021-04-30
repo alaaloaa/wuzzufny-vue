@@ -50,10 +50,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      laodingStatus: "loader/laodingStatus"
+      loadingStatus: "loader/loadingStatus"
     }),
     getData(paginateLinkurl, isPagination = false) {
-      this.laodingStatus(true);
+      this.loadingStatus(true);
       var url = "";
       if (this.query && isPagination) {
         url = paginateLinkurl + "&&" + this.query;
@@ -68,7 +68,7 @@ export default {
         this.$emit("paginationData", res.data.data);
         this.$nextTick(() => {
           this.disableButtons();
-          this.laodingStatus(false);
+          this.loadingStatus(false);
         });
       });
     },
