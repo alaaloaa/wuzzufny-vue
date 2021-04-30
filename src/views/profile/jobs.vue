@@ -130,7 +130,7 @@ export default {
     }),
     getData() {
       this.loadingStatus(true);
-      this.axios.get(`http://localhost:8000/api/user/jobs`).then(res => {
+      this.axios.get(`https://wuzzfny.herokuapp.com/api/user/jobs`).then(res => {
         this.items = res.data;
         this.loadingStatus(false);
       });
@@ -145,7 +145,7 @@ export default {
     deleteItemConfirm() {
       this.btnLoading = true;
       this.axios
-        .delete(`http://localhost:8000/api/job/${this.itemId}`)
+        .delete(`https://wuzzfny.herokuapp.com/api/job/${this.itemId}`)
         .then(res => {
           this.items.splice(this.index, 1);
           this.closeDelete();

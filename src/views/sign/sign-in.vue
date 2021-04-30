@@ -76,7 +76,7 @@ export default {
     request() {
       return {
         method: "post",
-        url: "http://localhost:8000/api/auth/login"
+        url: "https://wuzzfny.herokuapp.com/api/auth/login"
       };
     }
   },

@@ -235,7 +235,7 @@ export default {
     request() {
       return {
         method: "post",
-        url: `http://localhost:8000/api/job/create`,
+        url: `https://wuzzfny.herokuapp.com/api/job/create`,
         data: this.user
       };
     }

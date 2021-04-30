@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     getData(data) {
-      this.url = `http://localhost:8000/api/jobs`;
+      this.url = `https://wuzzfny.herokuapp.com/api/jobs`;
       if (data == "") {
         this.noData = true;
       } else {

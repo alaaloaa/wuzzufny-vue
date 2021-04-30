@@ -129,7 +129,7 @@ export default {
     },
     getUserData() {
       this.axios
-        .get(`http://localhost:8000/api/profile/${this.id}`)
+        .get(`https://wuzzfny.herokuapp.com/api/profile/${this.id}`)
         .then(res => {
           this.user = res.data;
           this.loading = false;

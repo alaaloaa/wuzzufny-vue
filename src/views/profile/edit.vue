@@ -158,7 +158,7 @@ export default {
     request() {
       return {
         method: "post",
-        url: `http://localhost:8000/api/profile/${this.user.id}`
+        url: `https://wuzzfny.herokuapp.com/api/profile/${this.user.id}`
         // data: this.user
       };
     }

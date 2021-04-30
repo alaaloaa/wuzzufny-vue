@@ -217,7 +217,7 @@ export default {
     getData() {
       this.loadingStatus(true);
       this.axios
-        .get(`http://localhost:8000/api/job/view/${this.id}`)
+        .get(`https://wuzzfny.herokuapp.com/api/job/view/${this.id}`)
         .then(res => {
           this.job = res.data.job;
           this.similarJobs = res.data.similarJobs;
@@ -229,7 +229,7 @@ export default {
     bookmark() {
       this.bookmarkLoading = true;
       this.axios
-        .post(`http://localhost:8000/api/job/bookmark/${this.id}`)
+        .post(`https://wuzzfny.herokuapp.com/api/job/bookmark/${this.id}`)
         .then(res => {
           this.bookmarked = res.data;
           this.bookmarkLoading = false;
@@ -237,7 +237,7 @@ export default {
     },
     apply() {
       this.axios
-        .post(`http://localhost:8000/api/job/apply/${this.id}`)
+        .post(`https://wuzzfny.herokuapp.com/api/job/apply/${this.id}`)
         .then(() => {
           this.applied = true;
         });

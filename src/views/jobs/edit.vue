@@ -246,7 +246,7 @@ export default {
     request() {
       return {
         method: "post",
-        url: `http://localhost:8000/api/job/${this.jobId}`,
+        url: `https://wuzzfny.herokuapp.com/api/job/${this.jobId}`,
         data: this.job
       };
     }
@@ -258,7 +258,7 @@ export default {
     }),
     getData() {
       this.axios
-        .get(`http://localhost:8000/api/job/${this.jobId}/edit`)
+        .get(`https://wuzzfny.herokuapp.com/api/job/${this.jobId}/edit`)
         .then(res => {
           this.job = res.data;
           this.loadingStatus(false);
