@@ -13,7 +13,7 @@
             :formBtn="formBtn"
             :request="request"
             :loader="loader"
-            @getResult="register"
+            @success="register"
           />
         </v-card>
       </v-col>
@@ -101,10 +101,9 @@ export default {
     loader: () => true
   },
   methods: {
-    register(res) {
-      if (res.status === 201) {
-        this.$router.push({ name: "signIn" });
-      }
+    register() {
+      console.log("hi");
+      this.$router.push({ name: "signIn" });
     }
   }
 };
