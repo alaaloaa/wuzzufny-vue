@@ -5,8 +5,12 @@ var cors = require("cors");
 
 const app = express();
 
-app.use(cors()); // Use this after the variable declaration
-
+const corsOptions = {
+  origin: "https://wuzzfny.herokuapp.com",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 //here we are configuring dist to serve app files
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
 
