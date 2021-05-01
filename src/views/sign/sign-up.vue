@@ -95,7 +95,7 @@ export default {
     request() {
       return {
         method: "post",
-        url: "https://wuzzfny.herokuapp.com/api/auth/register"
+        url: "http://127.0.0.1:8000/api/auth/register"
       };
     },
     loader: () => true
