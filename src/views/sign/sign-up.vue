@@ -6,7 +6,7 @@
           <h1
             class="headline text-center font-weight-bold py-4 mainColor--text"
           >
-            Sign Up ds
+            Sign Up
           </h1>
           <CustomForm
             :fields="fields"
@@ -95,7 +95,8 @@ export default {
     request() {
       return {
         method: "post",
-        url: "http://127.0.0.1:8000/api/auth/register"
+        url:
+          "https://cors-anywhere.herokuapp.com/https://wuzzfny.herokuapp.com/api/auth/register"
       };
     },
     loader: () => true
