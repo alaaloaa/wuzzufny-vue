@@ -6,7 +6,7 @@
           <h1
             class="headline text-center font-weight-bold py-4 mainColor--text"
           >
-            Sign Up
+            Sign Up ds
           </h1>
           <CustomForm
             :fields="fields"
