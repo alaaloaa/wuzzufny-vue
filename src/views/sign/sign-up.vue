@@ -6,7 +6,7 @@
           <h1
             class="headline text-center font-weight-bold py-4 mainColor--text"
           >
-            Sign Up ds
+            Sign Up
           </h1>
           <CustomForm
             :fields="fields"
@@ -102,7 +102,6 @@ export default {
   },
   methods: {
     register() {
-      console.log("hi");
       this.$router.push({ name: "signIn" });
     }
   }
