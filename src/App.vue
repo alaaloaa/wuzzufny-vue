@@ -71,7 +71,11 @@ export default {
         return Promise.reject(error);
       }
     );
+
     // send those headers when app created
+    this.axios.defaults.baseURL =
+      "https://cors-anywhere.herokuapp.com/https://wuzzfny.herokuapp.com/";
+    // this.axios.defaults.baseURL = "http://127.0.0.1:8000";
     this.axios.defaults.headers.common["Accept"] = "application/json";
     if (localStorage.getItem("token")) {
       this.axios.defaults.headers.common["Authorization"] =

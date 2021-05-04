@@ -130,7 +130,7 @@ export default {
     }),
     getData() {
       this.loadingStatus(true);
-      this.axios.get(`https://wuzzfny.herokuapp.com/api/user/jobs`).then(res => {
+      this.axios.get(`api/user/jobs`).then(res => {
         this.items = res.data;
         this.loadingStatus(false);
       });
@@ -144,17 +144,15 @@ export default {
 
     deleteItemConfirm() {
       this.btnLoading = true;
-      this.axios
-        .delete(`https://wuzzfny.herokuapp.com/api/job/${this.itemId}`)
-        .then(res => {
-          this.items.splice(this.index, 1);
-          this.closeDelete();
-          this.btnLoading = false;
-          this.popupData({
-            show: true,
-            text: res.data.msg
-          });
+      this.axios.delete(`api/job/${this.itemId}`).then(res => {
+        this.items.splice(this.index, 1);
+        this.closeDelete();
+        this.btnLoading = false;
+        this.popupData({
+          show: true,
+          text: res.data.msg
         });
+      });
     },
     closeDelete() {
       this.dialogDelete = false;

@@ -14,7 +14,7 @@
               :fields="fields"
               :formBtn="formBtn"
               :request="request"
-              @getResult="login"
+              @success="login"
               :loader="true"
               :popup="false"
               :errorsMix="false"
@@ -76,12 +76,13 @@ export default {
     request() {
       return {
         method: "post",
-        url: "https://wuzzfny.herokuapp.com/api/auth/login"
+        url: "api/auth/login"
       };
     }
   },
   methods: {
     login(response) {
+      console.log(response);
       if (response.status === 200) {
         this.$store.commit("userData", response.data);
         this.$router.push({ name: "Home" });

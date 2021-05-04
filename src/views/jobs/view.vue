@@ -216,31 +216,25 @@ export default {
     }),
     getData() {
       this.loadingStatus(true);
-      this.axios
-        .get(`https://wuzzfny.herokuapp.com/api/job/view/${this.id}`)
-        .then(res => {
-          this.job = res.data.job;
-          this.similarJobs = res.data.similarJobs;
-          this.bookmarked = this.job.bookmarks.length != 0 ? true : false;
-          this.applied = this.job.applies.length != 0 ? true : false;
-          this.loadingStatus(false);
-        });
+      this.axios.get(`api/job/view/${this.id}`).then(res => {
+        this.job = res.data.job;
+        this.similarJobs = res.data.similarJobs;
+        this.bookmarked = this.job.bookmarks.length != 0 ? true : false;
+        this.applied = this.job.applies.length != 0 ? true : false;
+        this.loadingStatus(false);
+      });
     },
     bookmark() {
       this.bookmarkLoading = true;
-      this.axios
-        .post(`https://wuzzfny.herokuapp.com/api/job/bookmark/${this.id}`)
-        .then(res => {
-          this.bookmarked = res.data;
-          this.bookmarkLoading = false;
-        });
+      this.axios.post(`api/job/bookmark/${this.id}`).then(res => {
+        this.bookmarked = res.data;
+        this.bookmarkLoading = false;
+      });
     },
     apply() {
-      this.axios
-        .post(`https://wuzzfny.herokuapp.com/api/job/apply/${this.id}`)
-        .then(() => {
-          this.applied = true;
-        });
+      this.axios.post(`api/job/apply/${this.id}`).then(() => {
+        this.applied = true;
+      });
     }
   },
   created() {

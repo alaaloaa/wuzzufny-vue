@@ -147,7 +147,10 @@ export default {
             this.axios({
               method: this.request.method,
               url: this.request.url,
-              data: formData
+              data: formData,
+              headers: {
+                "X-Requested-With": "XMLHttpRequest"
+              }
             })
               .then(res => {
                 this.loadingStatus(false);

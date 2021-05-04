@@ -246,7 +246,7 @@ export default {
     request() {
       return {
         method: "post",
-        url: `https://wuzzfny.herokuapp.com/api/job/${this.jobId}`,
+        url: `api/job/${this.jobId}`,
         data: this.job
       };
     }
@@ -257,13 +257,11 @@ export default {
       loadingStatus: "loader/loadingStatus"
     }),
     getData() {
-      this.axios
-        .get(`https://wuzzfny.herokuapp.com/api/job/${this.jobId}/edit`)
-        .then(res => {
-          this.job = res.data;
-          this.loadingStatus(false);
-          this.PageLoading = false;
-        });
+      this.axios.get(`api/job/${this.jobId}/edit`).then(res => {
+        this.job = res.data;
+        this.loadingStatus(false);
+        this.PageLoading = false;
+      });
     },
     update() {
       console.log("Updated");

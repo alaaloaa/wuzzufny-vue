@@ -40,7 +40,7 @@ export default new Vuex.Store({
         "Bearer " + localStorage.getItem("token");
     },
     getUserData(state) {
-      axios.get("https://wuzzfny.herokuapp.com/api/userData").then(res => {
+      axios.get("api/userData").then(res => {
         this.commit("userData", res.data);
         state.loader.loading = false;
         state.startPage = true;
@@ -54,12 +54,10 @@ export default new Vuex.Store({
       state.startPage = status;
     },
     getSkillsAndCountriesData(state) {
-      axios
-        .get("https://wuzzfny.herokuapp.com/api/countriesAndSkillsData")
-        .then(res => {
-          state.countries = res.data.countries;
-          state.skills = res.data.skills;
-        });
+      axios.get("api/countriesAndSkillsData").then(res => {
+        state.countries = res.data.countries;
+        state.skills = res.data.skills;
+      });
     },
     logout(state) {
       state.user = "";

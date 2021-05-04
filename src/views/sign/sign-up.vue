@@ -95,8 +95,7 @@ export default {
     request() {
       return {
         method: "post",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://wuzzfny.herokuapp.com/api/auth/register"
+        url: "api/auth/register"
       };
     },
     loader: () => true

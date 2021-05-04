@@ -128,12 +128,10 @@ export default {
       return require("@/assets/images/profile-pic.jpg");
     },
     getUserData() {
-      this.axios
-        .get(`https://wuzzfny.herokuapp.com/api/profile/${this.id}`)
-        .then(res => {
-          this.user = res.data;
-          this.loading = false;
-        });
+      this.axios.get(`api/profile/${this.id}`).then(res => {
+        this.user = res.data;
+        this.loading = false;
+      });
     },
     setUserDate() {
       if (this.id) {
