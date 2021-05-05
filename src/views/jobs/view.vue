@@ -129,7 +129,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col order="1">
+        <v-col :class="[$vuetify.breakpoint.xs ? 'text-center' : '']" order="1">
           <v-card class="pa-3 pb-7 ">
             <div class="name">
               <p class="text-center">Job Posted By</p>

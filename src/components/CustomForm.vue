@@ -184,13 +184,7 @@ export default {
       });
     }
   },
-  created() {
-    this.$on("change", (e, fieldKey) => {
-      if (fieldKey == "avatar") {
-        this.changefile(e);
-      }
-    });
-  }
+  created() {}
 };
 </script>
 

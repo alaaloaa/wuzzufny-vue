@@ -113,6 +113,9 @@ export default {
         return false;
       }
     },
+    searchKeys() {
+      return this.name + this.country;
+    },
     query() {
       return `name=${this.name}&&country=${this.country}`;
     },
@@ -200,6 +203,14 @@ export default {
   created() {
     this.getData();
     this.$store.commit("getSkillsAndCountriesData");
+  },
+  watch: {
+    searchKeys() {
+      if (this.searchKeys == "") {
+        this.search();
+        console.log("empty");
+      }
+    }
   }
 };
 </script>

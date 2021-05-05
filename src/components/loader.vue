@@ -8,7 +8,7 @@
       </div>
       <v-progress-circular
         v-if="type == 'circle'"
-        :size="150"
+        :size="$vuetify.breakpoint.xs ? 50 : 100"
         :width="5"
         color="mainColor"
         indeterminate

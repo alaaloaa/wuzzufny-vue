@@ -7,7 +7,6 @@
     />
     <v-container v-else>
       <v-layout row wrap>
-        <!-- <v-col sm="4" md="4" xl="3" color="red">Hello</v-col> -->
         <v-col offset-sm="2" sm="8" offset-xl="3" xl="6" xs="12">
           <div class="text-center" style="position: relative">
             <v-btn
@@ -40,7 +39,7 @@
       </v-layout>
 
       <v-layout row wrap>
-        <v-col offset-xl="3" xl="4" md="5" offset-sm="1" sm="10" xs="12">
+        <v-col offset-xl="3" xl="4" md="5" offset-sm="1" sm="10">
           <p
             class="overline contact"
             v-for="(info, index) in information"
