@@ -5,7 +5,8 @@
         <v-col
           md="9"
           sm="8"
-          :class="[$vuetify.breakpoint.xs ? 'text-center' : '']"
+          xs="12"
+          :class="[$vuetify.breakpoint.xs ? 'text-center' : '', 'xs-12']"
           order="5"
         >
           <v-card class="pa-3">
@@ -129,7 +130,11 @@
             </div>
           </v-card>
         </v-col>
-        <v-col :class="[$vuetify.breakpoint.xs ? 'text-center' : '']" order="1">
+        <v-col
+          xs="12"
+          :class="[$vuetify.breakpoint.xs ? 'text-center' : '', 'xs-12']"
+          order="1"
+        >
           <v-card class="pa-3 pb-7 ">
             <div class="name">
               <p class="text-center">Job Posted By</p>
