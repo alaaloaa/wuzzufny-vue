@@ -4,12 +4,8 @@
       <v-layout row wrap>
         <v-col
           md="9"
-          sm="9"
-          xs="12"
-          :class="[
-            'md-9 sm-9 xs-12',
-            $vuetify.breakpoint.xs ? 'text-center' : ''
-          ]"
+          sm="8"
+          :class="[$vuetify.breakpoint.xs ? 'text-center' : '']"
           order="5"
         >
           <v-card class="pa-3">
@@ -133,16 +129,7 @@
             </div>
           </v-card>
         </v-col>
-        <v-col
-          md="3"
-          sm="3"
-          xs="12"
-          :class="[
-            'md-3 sm-3 xs-12',
-            $vuetify.breakpoint.xs ? 'text-center' : ''
-          ]"
-          order="1"
-        >
+        <v-col order="1">
           <v-card class="pa-3 pb-7 ">
             <div class="name">
               <p class="text-center">Job Posted By</p>

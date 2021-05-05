@@ -223,7 +223,7 @@ export default {
           component: "v-switch",
           label: "Availability",
           key: "status",
-          value: true,
+          value: 1,
           bindOptions: {
             ["true-value"]: 1,
             ["false-value"]: 0
