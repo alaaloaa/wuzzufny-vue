@@ -5,12 +5,12 @@ var cors = require("cors");
 
 const app = express();
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: "http://localhost:3000",
+//   credentials: true, //access-control-allow-credentials:true
+//   optionSuccessStatus: 200
+// };
+app.use(cors());
 //here we are configuring dist to serve app files
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
 

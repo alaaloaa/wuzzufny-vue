@@ -100,7 +100,7 @@
               @click="apply"
               block
             >
-              <span v-if="!applied">Apply Now</span>
+              <span v-if="!applied">Apply Now For This Job</span>
               <span v-else
                 >You've Applied Wait
                 <br :class="$vuetify.breakpoint.xs ? 'd-block' : 'd-none'" />For
