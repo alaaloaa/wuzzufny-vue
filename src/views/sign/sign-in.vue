@@ -82,7 +82,6 @@ export default {
   },
   methods: {
     login(response) {
-      console.log(response);
       if (response.status === 200) {
         this.$store.commit("userData", response.data);
         this.$router.push({ name: "Home" });
