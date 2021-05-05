@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Home from "../views/Home";
+// import Home from "../views/Home";
 import SignIn from "../views/sign/sign-in.vue";
 import SignUp from "../views/sign/sign-up";
 import Logout from "../views/sign/logout";
@@ -20,11 +20,11 @@ import NotFound from "../views/notFound";
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
+  // {
+  //   path: "/",
+  //   name: "Home",
+  //   component: Home
+  // },
   {
     path: "/sign-in",
     name: "signIn",
@@ -44,7 +44,7 @@ const routes = [
     meta: { forAuth: true }
   },
   {
-    path: "/jobs",
+    path: "/",
     name: "jobs",
     component: Jobs
   },

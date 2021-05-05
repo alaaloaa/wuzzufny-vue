@@ -141,11 +141,11 @@ export default {
     },
     links() {
       return [
-        { name: "Home", icon: "mdi-home", route: "/" },
+        // { name: "Home", icon: "mdi-home", route: "/" },
         {
           name: "Jobs",
           icon: "mdi-folder-open",
-          route: "/jobs"
+          route: "/"
         },
         {
           name: "Create Job",
