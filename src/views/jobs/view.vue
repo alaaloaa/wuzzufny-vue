@@ -107,6 +107,20 @@
                 Employer Response</span
               >
             </v-btn>
+            <v-btn
+              v-else
+              small
+              class="white--text my-8 no-text-transform"
+              color="mainColor"
+              outlined
+              x-large
+              :disabled="applied"
+              block
+              router
+              to="/sign-in"
+            >
+              <span>Login To Apply</span>
+            </v-btn>
           </center>
           <v-card class="mt-4 pa-4">
             <div class="smilarJobs">
