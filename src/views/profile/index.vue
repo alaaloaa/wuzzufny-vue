@@ -7,8 +7,8 @@
     />
     <v-container v-else>
       <v-layout row wrap>
-        <v-col offset-sm="2" sm="8" offset-xl="3" xl="6" xs="12">
-          <div class="text-center" style="position: relative">
+        <v-col class="top-section" :style="cover()">
+          <div style="position: relative">
             <v-btn
               v-if="loggedIn && isUserProfile"
               class="mx-2  chatBtn"
@@ -22,43 +22,31 @@
                 mdi-pencil
               </v-icon>
             </v-btn>
-            <div class="profile-pic mb-4">
-              <img
-                class="profile-pic round"
-                :src="user.avatar ? user.avatar : getImgUrl()"
-              />
-            </div>
+          </div>
+          <div class="profile-pic pa-10">
+            <img
+              class="profile-pic round"
+              :src="user.avatar ? user.avatar : getImgUrl()"
+            />
             <h2 class="headline mainColor--text font-weight-bold">
               {{ user.name }}
             </h2>
-            <p class="overline mt-2">
-              {{ user.info }}
-            </p>
           </div>
         </v-col>
       </v-layout>
 
-      <v-layout row wrap>
-        <v-col offset-xl="3" xl="4" md="5" offset-sm="1" sm="10">
-          <p
-            class="overline contact"
-            v-for="(info, index) in information"
-            :key="index"
-          >
+      <v-row class="information">
+        <v-flex sm4 xs12 class="contact">
+          <p class="overline" v-for="(info, index) in information" :key="index">
             <v-icon color="mainColor" class="pr-2">{{ info.icon }}</v-icon>
             <span>{{ info.text }}</span>
           </p>
-        </v-col>
-        <v-col
-          class=""
-          offset-md="0"
-          offset-sm="1"
-          md="5"
-          sm="10"
-          xs="12"
-          xl="4"
-        >
-          <div class="text-center skills">
+        </v-flex>
+        <v-flex sm8 xs12>
+          <p class="overline mt-2">
+            {{ user.info }}
+          </p>
+          <div class="text-center skills mt-10">
             <h2 class="title mainColor--text">Skills</h2>
             <v-chip
               outlined
@@ -69,8 +57,8 @@
               {{ skill }}
             </v-chip>
           </div>
-        </v-col>
-      </v-layout>
+        </v-flex>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -93,6 +81,9 @@ export default {
     ...mapState({
       authUser: "user"
     }),
+    background() {
+      return require("@/assets/images/bg-cover.jpg");
+    },
     isUserProfile() {
       return this.user.id === this.authUser.id;
     },
@@ -128,6 +119,18 @@ export default {
     }
   },
   methods: {
+    cover() {
+      var bgImage;
+      if (this.$vuetify.theme.dark) {
+        bgImage = require("@/assets/images/bg-cover-dark.jpg");
+      } else {
+        bgImage = require("@/assets/images/bg-cover.jpg");
+      }
+
+      return {
+        backgroundImage: `url("${bgImage}")`
+      };
+    },
     getImgUrl() {
       return require("@/assets/images/profile-pic.jpg");
     },
@@ -152,6 +155,8 @@ export default {
   },
   created() {
     this.setUserDate();
+    console.log(this.$refs.bg);
+    // this.$refs.bg.style.background = "red";
   },
   watch: {
     id() {
@@ -161,6 +166,13 @@ export default {
 };
 </script>
 <style scoped>
+.top-section {
+  /* box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%); */
+  margin-bottom: 20px;
+  background: url("../../assets/images/bg-cover.jpg");
+  background-size: 100%;
+}
 .profile-pic img {
   width: 150px;
   height: 150px;
@@ -168,15 +180,25 @@ export default {
   border-radius: 50%;
   object-fit: cover;
 }
-@media screen and (max-width: 500px) {
-  .contact {
+.information {
+  margin-left: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .information {
     text-align: center;
+    margin-left: 0px;
+  }
+  .top-section {
+    box-shadow: none;
+    text-align: center;
+    background: none !important;
   }
 }
 .chatBtn {
   position: absolute;
-  right: 0;
-  /* top: -54%; */
+  right: 10px;
+  top: 10px;
 }
 </style>
 <style>
