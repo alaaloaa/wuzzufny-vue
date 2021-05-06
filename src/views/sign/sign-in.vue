@@ -33,6 +33,11 @@ export default {
   components: {
     CustomForm
   },
+  metaInfo() {
+    return {
+      title: `Sign In`
+    };
+  },
   computed: {
     formBtn() {
       return {

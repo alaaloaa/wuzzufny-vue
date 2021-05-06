@@ -78,6 +78,11 @@
 <script>
 import { mapState } from "vuex";
 export default {
+  metaInfo() {
+    return {
+      title: "Profile"
+    };
+  },
   data() {
     return {
       user: {},

@@ -86,6 +86,11 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
+  metaInfo() {
+    return {
+      title: "Your Jobs"
+    };
+  },
   data() {
     return {
       items: [],

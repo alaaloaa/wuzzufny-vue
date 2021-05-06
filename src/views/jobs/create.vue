@@ -21,6 +21,11 @@ export default {
   components: {
     CustomForm
   },
+  metaInfo() {
+    return {
+      title: `Create Job`
+    };
+  },
   data: () => ({}),
   computed: {
     ...mapGetters(["countriesData", "skillsData"]),

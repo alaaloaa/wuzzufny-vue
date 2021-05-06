@@ -24,6 +24,11 @@ export default {
   components: {
     CustomForm
   },
+  metaInfo() {
+    return {
+      title: "Edit Profile"
+    };
+  },
   data() {
     return {
       user: {}

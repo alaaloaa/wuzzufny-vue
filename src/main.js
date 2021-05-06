@@ -14,6 +14,8 @@ Vue.component("Confirm", Confirm);
 import Skeleton from "./components/Skeleton";
 Vue.component("Skeleton", Skeleton);
 
+import VueMeta from "vue-meta";
+Vue.use(VueMeta);
 // import Echo from "laravel-echo";
 
 // window.Pusher = require("pusher-js");

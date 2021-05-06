@@ -28,6 +28,11 @@ export default {
   components: {
     CustomForm
   },
+  metaInfo() {
+    return {
+      title: `Sign Up`
+    };
+  },
   computed: {
     formBtn() {
       return {

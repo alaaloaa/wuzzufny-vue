@@ -93,6 +93,11 @@ export default {
     CustomForm,
     Pagination
   },
+  metaInfo() {
+    return {
+      title: "Home"
+    };
+  },
   data() {
     return {
       noData: false,

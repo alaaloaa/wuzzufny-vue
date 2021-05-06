@@ -1,5 +1,5 @@
 {
-  "name": "vue-project",
+  "name": "Wuzzufny",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -23,6 +23,7 @@
     "vee-validate-laravel": "^1.1.0",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
+    "vue-meta": "^2.4.0",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.9",
     "vuex": "^3.4.0"

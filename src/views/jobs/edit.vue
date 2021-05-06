@@ -25,6 +25,11 @@ export default {
   components: {
     CustomForm
   },
+  metaInfo() {
+    return {
+      title: "Edit Job"
+    };
+  },
   data: () => ({
     job: {},
     PageLoading: true

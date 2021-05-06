@@ -194,6 +194,11 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
+  metaInfo() {
+    return {
+      title: this.job.name
+    };
+  },
   data() {
     return {
       job: {},

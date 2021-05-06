@@ -88,6 +88,11 @@ export default {
       this.changeType("circle");
     }
   }
+  // watch: {
+  //   $route(to) {
+  //     document.title = to.meta.title || "Wuzzufny";
+  //   }
+  // }
 };
 </script>
 

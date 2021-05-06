@@ -143,8 +143,8 @@ export default {
       return [
         // { name: "Home", icon: "mdi-home", route: "/" },
         {
-          name: "Jobs",
-          icon: "mdi-folder-open",
+          name: "Home",
+          icon: "mdi-home",
           route: "/"
         },
         {
