@@ -111,7 +111,7 @@ export default {
         this.mode = false;
       }
     } else {
-      localStorage.setItem("mode", false);
+      localStorage.setItem("mode", true);
     }
 
     //check if mainColor Exist in Local storage

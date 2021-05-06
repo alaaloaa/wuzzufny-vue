@@ -5,6 +5,7 @@
         <ul class="crumbs">
           <v-btn
             small
+            class="mb-2"
             elevation="1"
             v-for="(link, index) in pagination.links"
             :class="[{ activeButton: link.active }]"
