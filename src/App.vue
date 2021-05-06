@@ -72,7 +72,7 @@ export default {
       }
     );
 
-    // send those headers when app created
+    // send those headers when app created !
     this.axios.defaults.baseURL = "https://a4ta8al.herokuapp.com/";
     // this.axios.defaults.baseURL = "http://127.0.0.1:8000";
     this.axios.defaults.headers.common["Accept"] = "application/json";
