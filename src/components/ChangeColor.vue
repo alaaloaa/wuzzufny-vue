@@ -51,7 +51,7 @@ export default {
     color: "#fff",
     mode: false,
     colors: [
-      "#ffdd00",
+      "#ffc400",
       "#0fdb2e",
       "#e10d09",
       "#0abee6",
