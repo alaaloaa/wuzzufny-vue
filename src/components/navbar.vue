@@ -61,7 +61,7 @@
       <div class="text-center"></div>
     </v-toolbar>
 
-    <v-navigation-drawer dark v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list>
         <v-list-item-group>
           <v-list-item
