@@ -174,15 +174,9 @@ export default {
       if (res.status == 200) {
         this.updateUserData(res.data.user);
       }
-
-      // console.log(res.data);
     },
-    change(e, fieldKey, x) {
-      // console.log(e + x);
-    },
-    click(fieldKey) {
-      // console.log(fieldKey + "clicked");
-    }
+    change(e, fieldKey, x) {},
+    click(fieldKey) {}
   },
   created() {
     this.$store.commit("getSkillsAndCountriesData");

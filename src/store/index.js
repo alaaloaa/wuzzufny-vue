@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import axios from "axios";
 import * as loader from "./modules/loader";
 import * as popup from "./modules/popup";
+import router from "./../router/index.js";
 
 Vue.use(Vuex);
 
@@ -62,8 +63,8 @@ export default new Vuex.Store({
     logout(state) {
       state.user = "";
       localStorage.removeItem("token");
-      this.axios.defaults.headers.common["Authorization"] = "";
-      this.$router.push("sign-in");
+      axios.defaults.headers.common["Authorization"] = "";
+      router.push({ name: "signIn" });
     }
   },
   actions: {

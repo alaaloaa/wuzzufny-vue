@@ -137,7 +137,6 @@ export default {
             var data = Object.assign({}, ...result);
             var formData = new FormData();
             Object.keys(data).forEach(key => {
-              console.log(this.fields["avatar"]);
               if (data[key] && Array.isArray(data[key])) {
                 data[key].forEach(value => formData.append(`${key}[]`, value));
               } else {

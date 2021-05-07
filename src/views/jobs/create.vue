@@ -247,7 +247,6 @@ export default {
   },
   methods: {
     create(res) {
-      console.log(res.data.job.id);
       this.$router.push({ name: "job/view", params: { id: res.data.job.id } });
     }
   },

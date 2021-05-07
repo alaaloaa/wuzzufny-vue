@@ -268,9 +268,7 @@ export default {
         this.PageLoading = false;
       });
     },
-    update() {
-      console.log("Updated");
-    }
+    update() {}
   },
   created() {
     this.loadingStatus(true);

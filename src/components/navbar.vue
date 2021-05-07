@@ -18,6 +18,7 @@
           :key="index"
           router
           :to="link.route"
+          @click="fireFunction(link.function)"
         >
           <span v-if="!link.dropdown">
             <v-icon left v-if="link.icon">{{ link.icon }}</v-icon>
@@ -46,6 +47,7 @@
                 v-for="(item, index) in link.dropdown.items"
                 :key="index"
                 router
+                @click="fireFunction(item.function)"
                 :to="item.route"
               >
                 <v-list-item-title>
@@ -68,8 +70,9 @@
             v-for="(link, index) in loggedIn ? userLinks : guestLinks"
             :key="index"
             no-action
-            :to="link.route"
             router
+            :to="link.route"
+            @click="fireFunction(link.function)"
             :class="[link.dropdown ? 'dorpdown-menu-navbar' : '']"
           >
             <template v-if="!link.dropdown">
@@ -90,8 +93,9 @@
               <v-list-item
                 v-for="(dropdownLink, index) in link.dropdown.items"
                 :key="index"
-                :to="dropdownLink.route"
                 router
+                :to="dropdownLink.route"
+                @click="fireFunction(dropdownLink.function)"
                 class="subDorpdown-menu-link"
               >
                 <v-icon left v-if="dropdownLink.icon">{{
@@ -110,7 +114,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Navbar",
 
@@ -182,8 +186,8 @@ export default {
               {
                 name: "Log Out",
                 icon: "mdi-account-plus",
-                route: "/logout",
-                status: "user"
+                status: "user",
+                function: "logoutUser"
               }
             ]
           }
@@ -203,8 +207,16 @@ export default {
       ];
     }
   },
-  created() {
-    console.log(this.$refs.dorpdownMenuLink);
+  methods: {
+    ...mapMutations(["logout"]),
+    logoutUser() {
+      this.logout();
+    },
+    fireFunction(func) {
+      if (func) {
+        this[func]();
+      }
+    }
   }
 };
 </script>

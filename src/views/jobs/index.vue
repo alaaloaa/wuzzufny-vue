@@ -213,7 +213,6 @@ export default {
     searchKeys() {
       if (this.searchKeys == "") {
         this.search();
-        console.log("empty");
       }
     }
   }

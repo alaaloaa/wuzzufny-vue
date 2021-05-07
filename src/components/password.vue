@@ -28,7 +28,6 @@ export default {
   methods: {
     update(value) {
       this.$emit("input", value);
-      console.log(value);
     }
   }
 };

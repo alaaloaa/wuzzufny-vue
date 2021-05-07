@@ -155,8 +155,6 @@ export default {
   },
   created() {
     this.setUserDate();
-    console.log(this.$refs.bg);
-    // this.$refs.bg.style.background = "red";
   },
   watch: {
     id() {
