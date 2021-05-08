@@ -28,7 +28,7 @@
               class="profile-pic round"
               :src="user.avatar ? user.avatar : getImgUrl()"
             />
-            <h2 class="headline mainColor--text font-weight-bold">
+            <h2 class="headline mainColor--text font-weight-bold mt-2">
               {{ user.name }}
             </h2>
           </div>
