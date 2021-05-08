@@ -62,6 +62,7 @@ export default {
         if (error.response.status === 401) {
           this.startPageStatus(true);
           this.$store.commit("logout");
+          this.changeType("circle");
           this.loadingStatus(false);
         }
         if (error.response.status === 404) {
