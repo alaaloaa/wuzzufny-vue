@@ -22,7 +22,11 @@
             v-else
             router
             :to="`/job/view/${job.id}`"
-            :class="['pa-4 mb-4', $vuetify.breakpoint.xs ? 'text-center' : '']"
+            :class="[
+              'pa-4 mb-4',
+              $vuetify.breakpoint.xs ? 'text-center' : '',
+              'mainCard'
+            ]"
             v-for="(job, index) in jobs"
             :key="index"
           >

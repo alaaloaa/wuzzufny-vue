@@ -1,6 +1,6 @@
 <template>
-  <v-card bottom>
-    <v-footer class="footer" bottom padless>
+  <v-card class="mt-2">
+    <v-footer class="footer" absolute app padless>
       <v-card flat tile class=" text-center">
         <v-card-text>
           <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
