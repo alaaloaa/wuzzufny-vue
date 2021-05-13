@@ -157,7 +157,7 @@ export default {
   top: 100px;
   right: -140px;
   width: 150px;
-  z-index: 2;
+  z-index: 7;
   transition: all 1s;
   border: 1px solid #ccc;
   border-radius: 5px;
